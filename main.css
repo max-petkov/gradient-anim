@@ -1,0 +1,39 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+section {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+}
+
+.circle {
+    font-size: 62.5%;
+    --r: clamp(20em, calc(20em + ((1vw - 0.48em) * 28.6806)), 61.3em);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: var(--r);
+    height: var(--r);
+    border-radius: var(--r);
+    background: conic-gradient(from 90deg at 50% 50%, #DBFF1D 39.375deg, #FE7DC2 118.125deg, #FE7DC2 174.375deg, #FFA50E 296.2500071525574deg);
+}
+
+.circle--2 {
+    top: 100%;
+    left: 100%;
+    transform: translate(-100%, -100%);
+}
+
+.blur {
+    font-size: 62.5%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(clamp(3.5em, calc(3.5em + ((1vw - 0.48em) * 4.5139)), 10em));
+}
