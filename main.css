@@ -4,10 +4,15 @@
     box-sizing: border-box;
 }
 
+#loom-companion-mv3 {
+    display: none;
+}
+
 section {
     position: relative;
     height: 100vh;
     width: 100%;
+    overflow: hidden;
 }
 
 .circle {
