@@ -1,6 +1,7 @@
 function Canvas() {
   this.canvas = document.querySelector("canvas");
   this.ctx = this.canvas.getContext("2d");
+  this.animation = null;
 }
 
 Canvas.prototype.setSize = function () {
@@ -10,6 +11,18 @@ Canvas.prototype.setSize = function () {
 	this.canvas.width = w;
 	this.canvas.height = h;
 };
+
+Canvas.prototype.animate = function(cb) {
+	cb();
+	this.animation = requestAnimationFrame(() => this.animate(cb));
+}
+
+Canvas.prototype.resumeAnimation = this.animate;
+
+Canvas.prototype.stopAnimation = function() {
+	cancelAnimationFrame(this.animation);
+	this.animation = null;
+}
 
 function Circle(canvas, config) {
 	this.canvas = canvas;
@@ -68,10 +81,7 @@ Circle.prototype.collide = function(circ) {
 	const distance = Math.hypot(dx, dy);
 	const sumRadius = this.r + circ.r; 
 
-	if(distance < sumRadius) {
-		resolveCollision(this, circ);
-		console.log("collided");
-	}
+	if(distance < sumRadius) return resolveCollision(this, circ);
 }
 
 const canvas = new Canvas();
@@ -79,19 +89,18 @@ const circle1 = new Circle(canvas, {});
 const circle2 = new Circle(canvas, {x: window.innerWidth, y: window.innerHeight - 80});
 
 canvas.setSize();
-
 circle1.draw();
-
 circle2.draw();
 
-animate(function() {
+canvas.animate(function() {
 	canvas.ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
 	circle1.move();
 	circle1.collide(circle2);
 	
 	circle2.move();
 	circle2.collide(circle1);
-})
+});
+
 
 onResize(function() {
 	canvas.setSize();
